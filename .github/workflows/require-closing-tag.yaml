@@ -1,0 +1,19 @@
+name: Require Closing Tag in PR Body
+run-name: "#${{ github.event.pull_request.number }}"
+on:
+  pull_request:
+    types: [ opened, edited, synchronize ]
+jobs:
+  check-closing-tag:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check PR Body for Closing Tag
+        env:
+          PR_BODY: "${{ github.event.pull_request.body }}"
+        run: |
+          if echo "$PR_BODY" | grep -P 'Close #\d+'; then
+            echo "✅ PR contains a closing tag."
+          else
+            echo "::error::❌ PR must include a closing tag like 'Close #123'."
+            exit 1
+          fi
