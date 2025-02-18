@@ -1,5 +1,7 @@
 name: Check Repository Labels
 run-name: "#${{ github.event.issue.number }}"
+permissions:
+  issues: write
 on:
   issues:
     types: [ opened, labeled, unlabeled ]
