@@ -13,16 +13,16 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const requiredLabels = [ 'major', 'minor', 'patch' ]
-            
-            const { data: labels } = await github.rest.issues.listLabelsForRepo({
-              owner: context.repo.owner,
-              repo: context.repo.repo
+			const requiredLabels = ['major', 'minor', 'patch']
+
+			const { data: labels } = await github.rest.issues.listLabelsForRepo({
+				owner: context.repo.owner,
+				repo: context.repo.repo,
             })
             
             const existingLabels = labels.map(label => label.name)
             const missingLabels = requiredLabels.filter(label => !existingLabels.includes(label))
-            
-            if (missingLabels.length >0) {
-              core.setFailed(`Missing required labels: ${missingLabels.join(', ')}')
+
+			if (missingLabels.length > 0) {
+				core.setFailed(`Missing required labels: ${missingLabels.join(', ')}')
             }
