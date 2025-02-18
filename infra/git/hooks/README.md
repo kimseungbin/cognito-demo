@@ -35,3 +35,13 @@ This allows you to store hooks in a directory that can be version-controlled and
 Git hooks are essentially scripts that Git executes at different stages of the version control process.
 However, for these scripts to run successfully, they must have executable permissions.
 Without the proper permissions, Git will ignore the hooks, preventing them from executing as intended.
+
+## Available Hooks
+
+### commit-msg
+
+This hook enforces commit message convention by:
+
+- Extracting the issue number from branch names following the pattern `[category]/[issue_number]`.
+- Automatically adding the issue number to commit messages if not already present.
+- Skipping the check for branches that don't follow the naming convention.
