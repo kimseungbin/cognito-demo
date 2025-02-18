@@ -9,9 +9,9 @@ This setup allows everyone to use the same hooks without manually copying them.
 
 Before using the hooks included in this repository, you need to follow some setup instructions:
 
-- Changing th eGit hook directory to the specified location.
-- Ensure the hooks are executable
-- (Optional) Enable Git Hook in JetBrain's IDE.
+- Changing the Git hook directory to the specified location.
+- Ensure the hooks are executable.
+- (*Optional*) Enable Git Hook in JetBrains IDE.
 
 ## Changing the Git Hook Directory
 
