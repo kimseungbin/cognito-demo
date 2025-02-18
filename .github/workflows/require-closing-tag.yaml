@@ -11,7 +11,7 @@ jobs:
         env:
           PR_BODY: "${{ github.event.pull_request.body }}"
         run: |
-          if echo "$PR_BODY" | grep -E 'Close #\d+'; then
+          if printf "%s" "$PR_BODY" | grep -E 'Close #\d+'; then
             echo "✅ PR contains a closing tag."
           else
             echo "::error::❌ PR must include a closing tag like 'Close #123'."
