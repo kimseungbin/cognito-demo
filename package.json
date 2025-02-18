@@ -29,6 +29,7 @@
     "@nestjs/core": "^11.0.10"
   },
   "devDependencies": {
+    "@nestjs/testing": "^11.0.10",
     "prettier": "^3.5.1"
   }
 }
