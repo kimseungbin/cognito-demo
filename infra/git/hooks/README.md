@@ -26,7 +26,7 @@ This allows you to store hooks in a directory that can be version-controlled and
    ```
 2. Ensure the hooks are executable:
    ```bash
-   chmod +x /infra/git/hooks/*
+   chmod +x ./infra/git/hooks/*
    ```
 3. (Optional) Enable JetBrain's IDE's Git Hook feature.
 
