@@ -20,12 +20,13 @@
   },
   "config": {
   },
+  "engines": {
+    "node": ">=23.0.0"
+  },
   "dependencies": {
+    "@nestjs/common": "^11.0.10"
   },
   "devDependencies": {
     "prettier": "^3.5.1"
-  },
-  "engines": {
-    "node": ">=23.0.0"
   }
 }
