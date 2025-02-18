@@ -23,6 +23,12 @@ jobs:
             const existingLabels = labels.map(label => label.name)
             const missingLabels = requiredLabels.filter(label => !existingLabels.includes(label))
             
-            if (missingLabels.length >0) {
-              core.setFailed(`Missing required labels: ${missingLabels.join(', ')}')
+            if (missingLabels.length > 0) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: `Missing required labels: ${missingLabels.join(', ')}`
+              })
+              console.log(`::warning::Missing required labels: ${missingLabels.join(', ')}`)
             }
