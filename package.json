@@ -21,7 +21,8 @@
     "url": "git+https://github.com/kimseungbin/cognito-demo.git"
   },
   "scripts": {
-    "start": "npx nest start"
+    "start": "npx nest start",
+    "test:e2e": "vitest --config test/vite.config.ts"
   },
   "config": {},
   "engines": {
@@ -38,6 +39,10 @@
     "@swc/core": "^1.10.17",
     "@types/node": "^22.13.4",
     "prettier": "^3.5.1",
-    "@nestjs/cli": "^11.0.0"
+    "@nestjs/cli": "^11.0.0",
+    "@types/supertest": "^6.0.2",
+    "supertest": "^7.0.0",
+    "unplugin-swc": "^1.5.1",
+    "vitest": "^3.0.6"
   }
 }
