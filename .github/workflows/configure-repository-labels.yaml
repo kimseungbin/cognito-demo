@@ -1,0 +1,33 @@
+name: Configure Repository Labels
+run-name: "#${{ github.event.issue.number }}"
+permissions:
+  issues: write
+on:
+  issue_comment:
+    types: [ created ]
+jobs:
+  acknowledge-command:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Filter command input
+        id: filter
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const command = context.payload.comment.body.trim()
+            return { isConfigureCommand: command.startsWith('/configure-default-labels' ? 'true' : 'false')
+      - name: Write Acknowledgement Comment
+        if: steps.filter.outpus.isConfigureCommand == 'true'
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const ackComment = await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: `> [!NOTE]
+            > Command \'/configure-default-labels\' acknowledged.`
+            })
+            console.log('Command acknowledged')
