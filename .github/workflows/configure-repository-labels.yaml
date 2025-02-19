@@ -33,3 +33,18 @@ jobs:
             })
             console.log('Command acknowledged')
             return { comment_id: ackComment.data.id }
+      - name: Check for missing labels
+        if: steps.filter.outputs.isConfigureCommand == 'true'
+        id: check_labels
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const requiredLabels = ['major', 'minor', 'patch']
+            const { data: labels } = await github.rest.issues.listLabelsForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+            })
+            const existingLabels = labels.map(label => label.name)
+            const missingLabels = requiredLabels.filter(label => !existingLabels.includes(label))
+            return { missingLabels: missingLabels.join(', ') }
