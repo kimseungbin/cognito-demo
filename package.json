@@ -21,7 +21,8 @@
     "url": "git+https://github.com/kimseungbin/cognito-demo.git"
   },
   "scripts": {
-    "start": "npx nest start"
+    "start": "npx nest start",
+    "test:e2e": "vitest --config test/vite.config.ts"
   },
   "config": {},
   "engines": {
