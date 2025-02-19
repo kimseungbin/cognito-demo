@@ -2,7 +2,11 @@
   "name": "cognito-demo",
   "version": "0.0.0",
   "description": "A demo project showcasing AWS Cognito's Passkey-based passwordless authentication using a minimal express backend and AWS CDK for infrastructure deployment.",
-  "keywords": ["Authentication", "Amazon Cognito", "Passkey"],
+  "keywords": [
+    "Authentication",
+    "Amazon Cognito",
+    "Passkey"
+  ],
   "homepage": "https://github.com/kimseungbin/cognito-demo/",
   "bugs": {
     "url": "https://github.com/kimseungbin/cognito-demo/issues"
@@ -17,15 +21,20 @@
     "url": "git+https://github.com/kimseungbin/cognito-demo.git"
   },
   "scripts": {
+    "start": "npx nest start"
   },
-  "config": {
-  },
-  "dependencies": {
-  },
-  "devDependencies": {
-    "prettier": "^3.5.1"
-  },
+  "config": {},
   "engines": {
     "node": ">=23.0.0"
+  },
+  "dependencies": {
+    "@nestjs/common": "^11.0.10",
+    "@nestjs/core": "^11.0.10",
+    "@nestjs/platform-express": "^11.0.10"
+  },
+  "devDependencies": {
+    "@nestjs/testing": "^11.0.10",
+    "@types/node": "^22.13.4",
+    "prettier": "^3.5.1"
   }
 }
