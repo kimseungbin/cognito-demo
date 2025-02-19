@@ -1,0 +1,121 @@
+name: Configure Repository Labels
+run-name: "#${{ github.event.issue.number }}"
+permissions:
+  issues: write
+on:
+  issue_comment:
+    types: [ created ]
+jobs:
+  acknowledge-command:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Filter command input
+        id: filter
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const command = context.payload.comment.body.trim()
+            return { isConfigureCommand: command.startsWith('/configure-default-labels') ? 'true' : 'false' }
+      - name: Acknowledge command comment
+        if: steps.filter.outputs.isConfigureCommand == 'true'
+        id: initial_ack
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const ackComment = await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: `> [!NOTE]
+            > Command \'/configure-default-labels\' acknowledged. Adding the labels.`
+            })
+            console.log('Command acknowledged')
+            return { comment_id: ackComment.data.id }
+      - name: Check for missing labels
+        if: steps.filter.outputs.isConfigureCommand == 'true'
+        id: check_labels
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const requiredLabels = ['major', 'minor', 'patch']
+            const { data: labels } = await github.rest.issues.listLabelsForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+            })
+            const existingLabels = labels.map(label => label.name)
+            const missingLabels = requiredLabels.filter(label => !existingLabels.includes(label))
+            return { missingLabels: missingLabels.join(', ') }
+      - name: Update acknowledgement comment with label details
+        if: steps.filter.outputs.isConfigureCommand == 'true'
+        id: update_ack_details
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            // Retrieve missing labels as an array.
+            const missingLabels = '${{ steps.check_labels.outputs.missingLabels }}'.split(',').filter(x => x)
+            let details
+            if (missingLabels.length > 0) {
+              details = `The following labels will be created: ${missingLabels.join(', ')}`
+            } else {
+              details = "All required labels exist already. No labels will be created."
+            }
+            const newBody = `> [!NOTE]\n> Command \`/configure-default-labels\` acknowledged.\n> ${details}\n> Processing...`
+            await github.rest.issues.updateComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              comment_id: parseInt('${{ steps.initial_ack.outputs.comment_id }}'),
+              body: newBody,
+            })
+            return { details: details }
+      - name: Add missing labels
+        if: steps.filter.outputs.isConfigureCommand == 'true' && steps.check_labels.outputs.missingLabels != ''
+        id: add_labels
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const missingLabelsStr = '${{ steps.check_labels.outputs.missingLabels }}'
+            const missingLabels = missingLabelsStr.split(',').filter(x => x)
+            const labelDefaults = {
+              major: { color: 'b60205', description: 'Indicates a major update' },
+              minor: { color: '0e8a16', description: 'Indicates a minor update' },
+              patch: { color: 'd93f0b', description: 'Indicates a patch update' },
+            }
+            let created = []
+            for (const label of missingLabels) {
+              await github.rest.issues.createLabel({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                name: label,
+                color: labelDefaults[label].color,
+                description: labelDefaults[label].description,
+              })
+              created.push(label)
+            }
+            return { createdLabels: created.join(', ') }
+      - name: Final update of acknowledgement comment
+        if: steps.filter.outputs.isConfigureCommand == 'true'
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const missingLabels = '${{ steps.check_labels.outputs.missingLabels }}'.split(',').filter(x => x)
+            let finalMessage
+            if (missingLabels.length > 0) {
+              const createdLabels = '${{ steps.add_labels.outputs.createdLabels }}'
+              finalMessage = `Labels created: ${createdLabels}. Job completed.`
+            } else {
+              finalMessage = "No labels needed to be created. Job completed."
+            }
+            const updatedBody = `> [!NOTE]\n> Command \`/configure-default-labels\` acknowledged.\n> ${finalMessage}`
+            await github.rest.issues.updateComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              comment_id: parseInt('${{ steps.initial_ack.outputs.comment_id }}'),
+              body: updatedBody,
+            })
+            console.log("Final update done")
