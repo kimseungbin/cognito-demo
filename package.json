@@ -20,7 +20,9 @@
     "type": "git",
     "url": "git+https://github.com/kimseungbin/cognito-demo.git"
   },
-  "scripts": {},
+  "scripts": {
+    "start": "npx nest start"
+  },
   "config": {},
   "engines": {
     "node": ">=23.0.0"
