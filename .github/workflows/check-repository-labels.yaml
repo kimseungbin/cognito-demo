@@ -1,4 +1,4 @@
-name: Check Repository Labels
+name: Check and Configure Repository Labels
 run-name: "#${{ github.event.issue.number }}"
 permissions:
   issues: write
@@ -26,11 +26,17 @@ jobs:
             const missingLabels = requiredLabels.filter(label => !existingLabels.includes(label))
             
             if (missingLabels.length > 0) {
+              const commentBody = `> [!WARNING]
+            > Missing required labels: ${missingLabels.join(', ')}
+            
+            > [!TIP]
+            > You can add these labels manually, or type \`/configure-default-labels\` to automatically configure them.`
+
               await github.rest.issues.createComment({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 issue_number: context.issue.number,
-                body: `Missing required labels: ${missingLabels.join(', ')}`
+                body: commentBody
               })
               console.log(`::warning::Missing required labels: ${missingLabels.join(', ')}`)
             }
