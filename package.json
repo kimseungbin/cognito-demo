@@ -1,5 +1,31 @@
 {
+  "name": "cognito-demo",
+  "version": "0.0.0",
+  "description": "A demo project showcasing AWS Cognito's Passkey-based passwordless authentication using a minimal express backend and AWS CDK for infrastructure deployment.",
+  "keywords": ["Authentication", "Amazon Cognito", "Passkey"],
+  "homepage": "https://github.com/kimseungbin/cognito-demo/",
+  "bugs": {
+    "url": "https://github.com/kimseungbin/cognito-demo/issues"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "SeungBin Kim",
+    "email": "luxorienskim@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kimseungbin/cognito-demo.git"
+  },
+  "scripts": {
+  },
+  "config": {
+  },
+  "dependencies": {
+  },
   "devDependencies": {
     "prettier": "^3.5.1"
+  },
+  "engines": {
+    "node": ">=23.0.0"
   }
 }
