@@ -1,6 +1,5 @@
 name: E2E Tests
-run-name: >
-  E2E Tests - Commit: ${{ github.event.head_commit && github.event.head_commit.message ? split(github.event.head_commit.message, '\n')[0] : 'No commit message' }}
+run-name: "E2E Tests on ${{ github.ref_name }}: ${{ github.sha }}"
 on:
   push: { }
 jobs:
