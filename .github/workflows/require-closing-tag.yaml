@@ -1,5 +1,5 @@
 name: Require Closing Tag in PR Body
-run-name: "#${{ github.event.pull_request.number }}"
+run-name: "Checking Closing Tag on #${{ github.event.pull_request.number }}"
 on:
   pull_request:
     types: [ opened, edited, synchronize ]
