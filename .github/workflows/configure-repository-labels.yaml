@@ -16,7 +16,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const command = context.payload.comment.body.trim()
-            console.debug("Command": command)
+            console.debug("Command:", command)
             return { isConfigureCommand: command.startsWith('/configure-default-labels') ? 'true' : 'false' }
       - name: Acknowledge command comment
         if: steps.filter.outputs.isConfigureCommand == 'true'
