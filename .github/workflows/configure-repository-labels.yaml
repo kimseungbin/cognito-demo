@@ -1,5 +1,5 @@
 name: Configure Repository Labels
-run-name: "#${{ github.event.issue.number }}"
+run-name: "Label configuration triggered by issue: #${{ github.event.issue.number }}"
 permissions:
   issues: write
 on:
