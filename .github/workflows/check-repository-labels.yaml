@@ -1,5 +1,5 @@
-name: Check and Configure Repository Labels
-run-name: "#${{ github.event.issue.number }}"
+name: Check Repository Labels
+run-name: "Label checking triggered by issue: #${{ github.event.issue.number }}"
 permissions:
   issues: write
 on:
