@@ -18,15 +18,40 @@ The goal is to showcase Cognito's built-in authentication capabilities.
 Passkey authentication eliminates password-related friction, improving security and user convenience.
 Users can sign in seamlessly using biometrics or device authentication, reducing the risk of phising and credential leaks.
 
-# Getting Started
-
-## Prerequisites
+# Prerequisites
 
 - **Node.js & npm**: Required for running the backed and CDK scripts.
+- **AWS CLI**: Required to configure AWS Credentials when using CDK.
+- **AWS Credentials**: Use either AWS IAM user or AWS IAM Identity Center user credentials.
+  - Recommended: [IAM Identity Center](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-sso.html)
+  - [IAM user](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html#cli-configure-files-methods)
 
-## Installation
+# Installation
 
-1. Clone the Repository
-2. Install Dependencies
-3. Deploy Cognito Infrastructure
-4. Running the Backend
+## Cone the repository
+
+  ```bash
+  $ git clone https://github.com/kimseungbin/cognito-demo/
+  ```
+
+## Install dependencies
+
+  ```bash
+  $ npm i
+  ```
+
+## Bootstrap CDK
+
+> [!NOTE]
+> [What is bootstrapping?](https://docs.aws.amazon.com/cdk/v2/guide/bootstrapping.html#bootstrapping-what)
+
+Before bootstrapping CDK,
+ensure you have identified the target account and verified that you have the authority to deploy resources there.
+
+```bash
+$ cdk bootstrap --profile [YOUR_PROFILE_NAME]
+```
+
+## Deploy
+
+TBD.
