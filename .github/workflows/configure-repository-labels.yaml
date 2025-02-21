@@ -33,7 +33,7 @@ jobs:
             > Command \'/configure-default-labels\' acknowledged. Adding the labels.`
             })
             console.log('Command acknowledged')
-            return { comment_id: ackComment.data.id }
+            core.setOutput('comment_id', ackComment.data.id)
       - name: Check for missing labels
         if: steps.filter.outputs.isConfigureCommand == 'true'
         id: check_labels
@@ -48,7 +48,7 @@ jobs:
             })
             const existingLabels = labels.map(label => label.name)
             const missingLabels = requiredLabels.filter(label => !existingLabels.includes(label))
-            return { missingLabels: missingLabels.join(', ') }
+            core.setOutput('missingLabels', missingLabels.join(', '))
       - name: Update acknowledgement comment with label details
         if: steps.filter.outputs.isConfigureCommand == 'true'
         id: update_ack_details
