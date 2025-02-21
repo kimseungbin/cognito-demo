@@ -33,7 +33,7 @@ jobs:
             > Command \'/configure-default-labels\' acknowledged. Adding the labels.`
             })
             console.log('Command acknowledged')
-            core.setOutput('commentId', ackComment.data.id)
+            core.setOutput('comment_id', ackComment.data.id)
       - name: Check for missing labels
         if: steps.filter.outputs.isConfigureCommand == 'true'
         id: check_labels
