@@ -30,15 +30,15 @@ Users can sign in seamlessly using biometrics or device authentication, reducing
 
 ## Cone the repository
 
-  ```bash
-  $ git clone https://github.com/kimseungbin/cognito-demo/
-  ```
+```bash
+git clone https://github.com/kimseungbin/cognito-demo/
+```
 
 ## Install dependencies
 
-  ```bash
-  $ npm i
-  ```
+```bash
+npm i
+```
 
 ## Bootstrap CDK
 
@@ -49,7 +49,7 @@ Before bootstrapping CDK,
 ensure you have identified the target account and verified that you have the authority to deploy resources there.
 
 ```bash
-$ cdk bootstrap --profile [YOUR_PROFILE_NAME]
+cdk bootstrap --profile [YOUR_PROFILE_NAME]
 ```
 
 ## Deploy
